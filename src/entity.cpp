@@ -4,30 +4,42 @@
 
 void Entity::connectComponents(const Field& field)
 {
-    COMPONENT_CONNECTORS[physical_component_->type() - 1]
-                        [graphical_component_->type() - 1](physical_component_, graphical_component_, field);
+    COMPONENT_CONNECTORS[phys_->type()]
+                        [graph_->type()](phys_, graph_, field);
 }
 
-GraphicalComponent* Entity::graphical_component()
+GraphicalComponent* Entity::graph()
 {
-    return graphical_component_;
+    return graph_;
 }
 
-PhysicalComponent* Entity::physical_component()
+PhysicalComponent* Entity::phys()
 {
-    return physical_component_;
+    return phys_;
 }
 
 Entity::Entity(GraphicalComponent* graph_comp, PhysicalComponent* phys_comp, const Field& field)
 {
-    graphical_component_ = graph_comp;
-    physical_component_  = phys_comp;
+    graph_ = graph_comp;
+    phys_  = phys_comp;
 
     connectComponents(field);
 }
 
+Entity::Entity(const Entity* other)
+{
+    this->graph_ = other->graph_;
+    this->phys_  = other->phys_;
+}
+
+Entity::Entity(const Entity& other)
+{
+    this->graph_ = other.graph_;
+    this->phys_  = other.phys_;
+}
+
 Entity::~Entity()
 {
-    delete physical_component_;
-    delete graphical_component_;
+    delete phys_;
+    delete graph_;
 }

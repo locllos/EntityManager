@@ -1,22 +1,30 @@
 #include "entity.h"
 #include "field.h"
+#include "collision_processor.h"
+
 
 class EntityManager
 {
 private:
 
-    Entity** entities_;
+    List<Entity*> entity_list_;
 
     size_t size_;
-    size_t capacity_;
+
+    void drawProcessing(Display& display, Field& field);
+    void detectCollisionProcessing(Array<Collision>& collisions, Field& field, float tick);
+    void responseCollisionProcessing(Array<Collision>& collisions, Field& field);
+    void nextMovementProcessing(float tick);
+
 
 public:
 
-    EntityManager() = default;
-    EntityManager(size_t capacity = 4);
+    EntityManager();
 
-    void addEntity(Entity* ball);
+    void addEntity(Entity* entity);
+    void addFilledCirclePhysCircle(Field& field, Color color, float radius, float mass, Vector2 coord, Vector2 velocity, REACTION_TYPE react_type = NO_REACTION);
+    void addFilledSquarePhysCircle(Field& field, Color color, float length, float mass, Vector2 coord, Vector2 velocity, REACTION_TYPE react_type = NO_REACTION);
     void processEntities(Display& display, Field& field, float tick);
 
-    ~EntityManager();
+    ~EntityManager() = default;
 };

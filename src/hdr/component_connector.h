@@ -3,8 +3,7 @@
 #include "entity.h"
 #include "physical_circle.h"
 #include "filled_circle.h"
-
-class FilledSquare;
+#include "filled_square.h"
 
 typedef void (*connectComponents)(PhysicalComponent*, GraphicalComponent*, const Field&);
 
@@ -12,7 +11,7 @@ typedef void (*connectComponents)(PhysicalComponent*, GraphicalComponent*, const
 void connectPhysCircleFilledCircle(PhysicalCircle* phys_circle, FilledCircle* graph_circle, const Field& field);
 void connectPhysCircleFilledSquare(PhysicalCircle* phys_circle, FilledSquare* graph_square, const Field& field);
 
-const connectComponents COMPONENT_CONNECTORS[AMOUNT_PHYSICAL_COMPONENTS - 1][AMOUNT_GRAPHICAL_COMPONENTS - 1] = 
+const connectComponents COMPONENT_CONNECTORS[AMOUNT_PHYSICAL_COMPONENTS][AMOUNT_GRAPHICAL_COMPONENTS] = 
 {
     {(connectComponents)connectPhysCircleFilledCircle, (connectComponents)connectPhysCircleFilledSquare},
 };

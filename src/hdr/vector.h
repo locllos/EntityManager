@@ -1,6 +1,7 @@
 #pragma once
 
 #include <math.h>
+#include <stdio.h>
 
 const float ARROW_FACTOR_SIZE = 0.1;
 
@@ -52,6 +53,17 @@ public:
               float arrow_factor_size = ARROW_FACTOR_SIZE);
 
     void Normalize();
+
+    ~Vector2()
+    {
+        // static long long int destr_calls_num = 0;
+        // ++destr_calls_num;
+
+        // printf("destr vector calls num: %lld\n", destr_calls_num);
+        
+        // x = 0;
+        // y = 0;
+    }
 
 };
 

@@ -1,31 +1,52 @@
 #pragma once
 
 #include "vector.h"
+#include "display.h"
 
-struct PixelPoint;
 class PhysicalComponent;
 class Field;
 
+enum COLLISION_TYPE
+{
+    NO_COLLISION = 0,
+    WALL_COLLISION_LEFT,
+    WALL_COLLISION_RIGHT,
+    WALL_COLLISION_UP,
+    WALL_COLLISION_DOWN,
+
+    ENTITY_COLLISION,
+
+    AMOUNT_COLLISIONS
+};
+
+
 enum GRAPHICAL_TYPE
 {
-    NO_GRAPHIC, 
 
     FILLED_CIRCLE,
     FILLED_SQUARE,
 
     AMOUNT_GRAPHICAL_COMPONENTS,
+    NO_GRAPHIC, 
 };
 
 enum PHYSICAL_TYPE
 {
-    NO_PHYSIC, 
 
     PHYSICAL_CIRCLE,
 
     AMOUNT_PHYSICAL_COMPONENTS,
+    NO_PHYSIC, 
 };
 
-//TODO: двумерную таблицу виртуальных функций взаимодействий физических и графический компонент
+enum REACTION_TYPE
+{
+    REACTION_CIRCLE,
+    REACTION_SQUARE,
+
+    AMOUNT_REACTION_TYPES,
+    NO_REACTION, 
+};
 
 class GraphicalComponent
 {
@@ -35,10 +56,14 @@ protected:
 
 public:
 
+    PixelPoint position;
+    Color color;
+
+public:
+
     GraphicalComponent() = default;
 
     virtual void Draw(Display& display) = 0;
-    virtual void Move(PixelPoint pixelpoint) = 0;
 
     GRAPHICAL_TYPE type() {return type_;}
 
@@ -51,6 +76,7 @@ class PhysicalComponent
 protected:
 
     PHYSICAL_TYPE type_;
+    REACTION_TYPE react_type_;
 
 public:
     
@@ -61,8 +87,13 @@ public:
     PhysicalComponent() = default;    
 
     virtual void nextMovement(float tick) = 0;
+    virtual COLLISION_TYPE collisionWallDetect(const Field& field, float tick) = 0;
+    virtual void collisionWallResponse(const Field& field, COLLISION_TYPE collision_type) = 0;
+    virtual Vector2 getNextMovement(float tick) const = 0;
+    virtual float getKineticEnergy() const = 0;
 
-    PHYSICAL_TYPE type() {return type_;}
+    PHYSICAL_TYPE type() const {return type_;}
+    REACTION_TYPE react_type() const {return react_type_;}
 
     virtual ~PhysicalComponent() = default;
 };
@@ -71,19 +102,22 @@ class Entity
 {
 private:
 
-    GraphicalComponent* graphical_component_;
-    PhysicalComponent* physical_component_;
+    GraphicalComponent* graph_;
+    PhysicalComponent*  phys_;
 
     void connectComponents(const Field& field);
 
 public:
 
     Entity() = delete;
-
+    
     Entity(GraphicalComponent* graph_comp, PhysicalComponent* phys_comp, const Field& field);
+    Entity(const Entity& other);
+    Entity(const Entity* other);
 
-    GraphicalComponent* graphical_component();
-    PhysicalComponent* physical_component();
+    GraphicalComponent* graph();
+    PhysicalComponent* phys();
 
     ~Entity();
 };
+

@@ -3,6 +3,9 @@
 const float PI = 3.14159265359;
 const float ARROW_ANGLE = PI / 12;
 
+Color::Color(uint8_t init_red,  uint8_t init_green, uint8_t init_blue, uint8_t init_alpha) : red(init_red), blue(init_blue), green(init_green), alpha(init_alpha) {}; 
+
+
 bool areColorsEqual(Color color_a, Color color_b)
 {
     return ((color_a.red   == color_b.red) &&
@@ -137,7 +140,7 @@ void Display::Present()
 
 Color Display::getColor()
 {   
-    SDL_Color color = {};
+    SDL_Color color{};
     
     SDL_GetRenderDrawColor(renderer_, &color.r, &color.g, &color.b, &color.a);
 
@@ -158,7 +161,7 @@ void Display::drawPoint(PixelPoint point, Color color)
 
     bool is_current_color = areColorsEqual(color, CURRENT_COLOR);
 
-    Color old_color = {};
+    Color old_color{};
     if (!is_current_color) 
     {   
         old_color = getColor();
@@ -177,7 +180,7 @@ void Display::drawLine(PixelPoint first, PixelPoint second, Color color, size_t 
     
     bool is_current_color = areColorsEqual(color, CURRENT_COLOR);
 
-    Color old_color = {};
+    Color old_color{};
     if (!is_current_color) 
     {   
         old_color = getColor();
@@ -192,11 +195,11 @@ void Display::drawLine(PixelPoint first, PixelPoint second, Color color, size_t 
 
 void Display::fillRect(const Rectangle& rectangle, Color color)
 {
-    assert(isWithinWindow({rectangle.x, rectangle.y}));
+    if (!isWithinWindow({rectangle.x, rectangle.y})) return;
     
     bool is_current_color = areColorsEqual(color, CURRENT_COLOR);
 
-    Color old_color = {};
+    Color old_color{};
     if (!is_current_color) 
     {   
         old_color = getColor();

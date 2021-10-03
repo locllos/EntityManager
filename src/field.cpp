@@ -59,9 +59,9 @@ void Field::Draw(Display& display)
 
 void Field::drawFigure(Display& display, Entity* entity)
 {
-    entity->graphical_component()->Move(coord_system_.getAbsolute(entity->physical_component()->coord));
+    entity->graph()->position = coord_system_.getAbsolute(entity->phys()->coord);
 
-    entity->graphical_component()->Draw(display);
+    entity->graph()->Draw(display);
 }
 
 bool Field::isWithin(PixelPoint point) const

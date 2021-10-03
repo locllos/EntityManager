@@ -6,8 +6,8 @@ OBJ_FLAGS = -c -g3
 EXEC_NAME = entity_master
 SUCCESS_MESSAGE = Success!
 
-main: $(OBJ_DIR)/display.o $(OBJ_DIR)/field.o $(OBJ_DIR)/coordinate_system.o $(OBJ_DIR)/vector.o $(OBJ_DIR)/filled_circle.o $(OBJ_DIR)/entity_manager.o $(OBJ_DIR)/entity.o $(OBJ_DIR)/collision_processor.o $(OBJ_DIR)/physical_circle.o $(OBJ_DIR)/component_connector.o 
-	$(EXEC) $(MAIN_DIR)/main.cpp $(OBJ_DIR)/display.o $(OBJ_DIR)/field.o $(OBJ_DIR)/coordinate_system.o $(OBJ_DIR)/vector.o $(OBJ_DIR)/filled_circle.o $(OBJ_DIR)/entity_manager.o $(OBJ_DIR)/entity.o $(OBJ_DIR)/collision_processor.o $(OBJ_DIR)/physical_circle.o $(OBJ_DIR)/component_connector.o $(MAIN_FLAGS) -o $(EXEC_NAME)
+main: $(OBJ_DIR)/display.o $(OBJ_DIR)/field.o $(OBJ_DIR)/coordinate_system.o $(OBJ_DIR)/vector.o $(OBJ_DIR)/filled_circle.o $(OBJ_DIR)/entity_manager.o $(OBJ_DIR)/entity.o $(OBJ_DIR)/collision_processor.o $(OBJ_DIR)/physical_circle.o $(OBJ_DIR)/component_connector.o $(OBJ_DIR)/filled_square.o
+	$(EXEC) $(MAIN_DIR)/main.cpp $(OBJ_DIR)/display.o $(OBJ_DIR)/field.o $(OBJ_DIR)/coordinate_system.o $(OBJ_DIR)/vector.o $(OBJ_DIR)/filled_circle.o $(OBJ_DIR)/entity_manager.o $(OBJ_DIR)/entity.o $(OBJ_DIR)/collision_processor.o $(OBJ_DIR)/physical_circle.o $(OBJ_DIR)/component_connector.o $(OBJ_DIR)/filled_square.o $(MAIN_FLAGS) -o $(EXEC_NAME)
 
 $(OBJ_DIR)/display.o:
 	$(EXEC) $(OBJ_FLAGS) $(MAIN_DIR)/display.cpp -o $(OBJ_DIR)/display.o
@@ -38,6 +38,12 @@ $(OBJ_DIR)/physical_circle.o:
 
 $(OBJ_DIR)/component_connector.o:
 	$(EXEC) $(OBJ_FLAGS) $(MAIN_DIR)/component_connector.cpp -o $(OBJ_DIR)/component_connector.o
+
+$(OBJ_DIR)/filled_square.o:
+	$(EXEC) $(OBJ_FLAGS) $(MAIN_DIR)/filled_square.cpp -o $(OBJ_DIR)/filled_square.o
+
+# $(OBJ_DIR)/list.o:
+# 	$(EXEC) $(OBJ_FLAGS) $(MAIN_DIR)/hdr/list.hpp -o $(OBJ_DIR)/list.o
 
 all: main clear
 	echo -e "\033[0;32m$(SUCCESS_MESSAGE)\033[0m"

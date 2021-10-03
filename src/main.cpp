@@ -6,6 +6,8 @@ const Color kQuietYellow = {255, 250, 208, 255};
 const Color kQuietBlue = {203, 252, 255, 255};
 const Color RED = {255, 0, 0, 255};
 const Color BLUE = {0, 0, 255, 255};
+const Color YELLOW = {255, 255, 0, 255};
+const Color GREEN = {0, 255, 0, 255};
 
 int main()
 {
@@ -16,9 +18,19 @@ int main()
 
     display.getWindowSize(&width, &height);
 
-    Field field({0, 0, width, height}, kQuietYellow, CENTERED_ORIGIN_POINT, 20);
+    Field field({20, 20, width * 2 / 3, height * 2 / 3}, kQuietYellow, CENTERED_ORIGIN_POINT, 20);
 
-    EntityManager Entity_master(4);
+    EntityManager manager{};
+
+    manager.addFilledCirclePhysCircle(field, BLUE, 1, 1, {8, -8}, {-400, -400}, REACTION_CIRCLE);
+    manager.addFilledCirclePhysCircle(field, YELLOW, 1, 1, {-1, 9}, {-100, 100}, REACTION_CIRCLE);
+    manager.addFilledCirclePhysCircle(field, YELLOW, 1, 1, {2, 1}, {100, 100}, REACTION_CIRCLE);
+    manager.addFilledCirclePhysCircle(field, YELLOW, 1, 1, {3, -4}, {100, -100}, REACTION_CIRCLE);
+    manager.addFilledCirclePhysCircle(field, YELLOW, 1, 1, {-4, 7}, {100, -100}, REACTION_CIRCLE);
+    manager.addFilledCirclePhysCircle(field, YELLOW, 1, 1, {5, -5}, {-100, -100}, REACTION_CIRCLE);
+    manager.addFilledCirclePhysCircle(field, YELLOW, 1, 1, {-6, 3}, {-100, 100}, REACTION_CIRCLE);
+    manager.addFilledCirclePhysCircle(field, YELLOW, 1, 1, {7, -2}, {-100, 100}, REACTION_CIRCLE);
+    
 
     bool quit = false;
     SDL_Event event = {};
@@ -33,22 +45,20 @@ int main()
             switch (event.key.keysym.scancode)
             {
                 case SDL_SCANCODE_UP:
-                    tick += 0.000001;
+                    tick += 0.0000001;
                     break;
 
                 case SDL_SCANCODE_DOWN:
-                    tick -= 0.000001;
+                    tick -= 0.0000001;
                     break;
                 default:
                     break;
             }
         }
         field.Draw(display);
-        Entity_master.processEntities(display, field, tick);
+        manager.processEntities(display, field, tick);
         display.Present();
-    
     }
-
 
     return 0;
 }

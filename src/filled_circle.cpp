@@ -1,34 +1,29 @@
 #include "hdr/filled_circle.h"
 
-FilledCircle::FilledCircle(PixelPoint position, Color color, float radius) : color_(color), pixel_radius_(radius) 
+FilledCircle::FilledCircle(PixelPoint position, Color init_color, float radius) : pixel_radius(radius) 
 {
-    position_ = position;
+    color = init_color;
+    position = position;
     type_ = FILLED_CIRCLE;
 };
 
-FilledCircle::FilledCircle(Color color) : position_({}), color_(color), pixel_radius_(0) {};
-
-
-void FilledCircle::Move(PixelPoint point)
-{
-    position_ = point;
-}
+FilledCircle::FilledCircle(Color init_color) : pixel_radius(0) {color = init_color; type_ = FILLED_CIRCLE;};
 
 
 void FilledCircle::Draw(Display& display)
 {   
     Color old_color = display.getColor();
-    display.setColor(color_);
+    display.setColor(color);
 
     
-    PixelPoint point = {position_.x - pixel_radius_, position_.y - pixel_radius_};
+    PixelPoint point = {position.x - pixel_radius, position.y - pixel_radius};
 
-    for (; point.x < position_.x; ++point.x)
+    for (; point.x < position.x; ++point.x)
     {   
-        for (; point.y < position_.y; ++point.y)
+        for (; point.y < position.y; ++point.y)
         {   
-            PixelPoint result = position_ - point;
-            if (result.x * result.x + result.y * result.y <= pixel_radius_ * pixel_radius_)
+            PixelPoint result = position - point;
+            if (result.x * result.x + result.y * result.y <= pixel_radius * pixel_radius)
             {   
                 display.drawPoint(point);
                 display.drawPoint({point.x, point.y + 2 * result.y - 1});
@@ -36,7 +31,7 @@ void FilledCircle::Draw(Display& display)
                 display.drawPoint({point.x + 2 * result.x - 1, point.y + 2 * result.y - 1});
             } 
         }
-        point.y = position_.y - pixel_radius_;
+        point.y = position.y - pixel_radius;
     }
     
     display.setColor(old_color);
