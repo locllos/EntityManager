@@ -51,7 +51,7 @@ void Field::Draw(Display& display)
     Color display_color = display.getColor();
 
     display.setColor(color_);
-    display.setClipRect(area_);
+    // display.setClipRect(area_);
     display.fillRect(area_);
 
     display.setColor(display_color);
@@ -62,6 +62,13 @@ void Field::drawFigure(Display& display, Entity* entity)
     entity->graph()->position = coord_system_.getAbsolute(entity->phys()->coord);
 
     entity->graph()->Draw(display);
+}
+
+Vector2 Field::getRandomCoord() const
+{
+    PixelPoint rand_pixel = {(size_t)rand() % area_.width, (size_t)rand() % area_.height};
+
+    return coord_system_.getRelative(rand_pixel);
 }
 
 bool Field::isWithin(PixelPoint point) const

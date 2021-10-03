@@ -1,3 +1,5 @@
+#pragma once
+
 #include "entity.h"
 #include "field.h"
 #include "collision_processor.h"

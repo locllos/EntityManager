@@ -14,6 +14,25 @@ bool areColorsEqual(Color color_a, Color color_b)
             (color_a.alpha == color_b.alpha));
 }
 
+Color getRandomColor()
+{
+    return Color(rand() % 255, rand() % 255, rand() % 255, rand() % 255);
+}
+
+void Color::decreaseRGB(uint8_t value)
+{
+    red -= value;
+    green -= value;
+    blue -= value;
+}
+
+void Color::increaseRGB(uint8_t value)
+{
+    red += value;
+    green += value;
+    blue += value;
+}
+
 Color convertSDLColorToDefault(SDL_Color sdl_color)
 {
     Color color = {sdl_color.r, sdl_color.g, sdl_color.b, sdl_color.a};
@@ -24,6 +43,21 @@ Color convertSDLColorToDefault(SDL_Color sdl_color)
 SDL_Color convertDefaultColorToSDL(Color color)
 {
     return (SDL_Color){color.red, color.green, color.blue, color.alpha};
+}
+
+bool MouseState::isClickedLeftButton() const
+{
+    return status & SDL_BUTTON_LMASK;
+}
+
+bool MouseState::isClickedMiddleButton() const
+{
+    return status & SDL_BUTTON_MMASK;
+}
+
+bool MouseState::isClickedRightButton() const
+{
+    return status & SDL_BUTTON_RMASK;
 }
 
 Rectangle convertSDLRectangleToDefault(SDL_Rect sdl_rect)
@@ -218,6 +252,25 @@ void Display::setClipRect(const Rectangle& rect)
     SDL_RenderSetClipRect(renderer_, &sdl_rect);
 }
 
+MouseState Display::getMouseState() const
+{
+    MouseState state = {};
+    
+    int x_pos = 0;
+    int y_pos = 0;
+    
+    state.status = SDL_GetMouseState(&x_pos, &y_pos);
+    
+    state.position.x = x_pos;
+    state.position.y = y_pos;
+
+    return state;
+}
+
+void Delay(int time)
+{
+    SDL_Delay(time);
+}
 
 Display::~Display()
 {

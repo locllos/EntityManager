@@ -24,17 +24,11 @@ float getFloatRand(size_t accuracy)
     return (rand() % accuracy) / accuracy;
 }
 
-Vector2 getRandomDirection()
-{
-    Vector2 direction(rand(), rand());
-    direction.Normalize();
-
-    return direction;
-}
-
 // detect::
-bool detectPhysCirclePhysCircle(const PhysicalCircle* first, const PhysicalCircle* second, float tick)
-{
+bool detectPhysCirclePhysCircle(PhysicalCircle* first, PhysicalCircle* second, float tick)
+{   
+    if (first->was_collide || second->was_collide) return false;
+
     if (first == second) return false;
 
     Vector2 next_coord_first  = first->getNextMovement(tick);
@@ -43,7 +37,14 @@ bool detectPhysCirclePhysCircle(const PhysicalCircle* first, const PhysicalCircl
     Vector2 collision_vector = next_coord_first - next_coord_second;
     float collision_distance = collision_vector.getLength();
 
-    return (collision_distance <= first->radius + second->radius);
+    if (collision_distance <= first->radius + second->radius)
+    {
+        first->was_collide = true;
+        second->was_collide = true;
+        return true;
+    }
+
+    return false;
 }
 
 // collision::
@@ -152,14 +153,15 @@ void reactionSquareSquare(Entity* first, Entity* second, const Field& field, Lis
     
     float current_angle = direction.getAngle();
     for (size_t i = 0; i < amount_balls; ++i)
-    {
-        list->Append(new Entity((GraphicalComponent*)(new FilledCircle(result_color)), 
-                                (PhysicalComponent*) (new PhysicalCircle(result_radius, 
-                                                                         result_mass, 
-                                                                         direction * velocity_coeff, 
-                                                                         result_coord + direction * 2, 
-                                                                         REACTION_CIRCLE)), 
-                                                                         field));
+    {   
+        PhysicalComponent* new_phys_comp = new PhysicalCircle(result_radius, 
+                                                              1, 
+                                                              direction * velocity_coeff, 
+                                                              result_coord + direction * 2, 
+                                                              REACTION_CIRCLE);
+        GraphicalComponent* new_graph_comp = new FilledCircle(result_color);
+        list->Append(new Entity(new_graph_comp, new_phys_comp, field));
+        
         direction.Rotate(current_angle);
         current_angle += rotatable_angle;
     }

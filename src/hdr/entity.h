@@ -67,6 +67,8 @@ public:
 
     GRAPHICAL_TYPE type() {return type_;}
 
+    virtual bool isWithin(const PixelPoint& point) = 0;
+
     virtual ~GraphicalComponent() = default;
     
 };
@@ -83,6 +85,7 @@ public:
     Vector2 coord;
 
 public:
+    bool was_collide;
 
     PhysicalComponent() = default;    
 
@@ -120,4 +123,3 @@ public:
 
     ~Entity();
 };
-

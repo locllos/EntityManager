@@ -17,12 +17,12 @@ struct Collision
 
 const float KINETIC_ENERGY_THRESHOLD = 1;
 
-typedef bool           (*CollisionDetect)  (const PhysicalComponent*, const PhysicalComponent*, float tick);
+typedef bool           (*CollisionDetect)  (PhysicalComponent*, PhysicalComponent*, float tick);
 typedef void           (*CollisionResponce)(PhysicalComponent*, PhysicalComponent*);
 typedef void (*ReactionResponce) (Entity*, Entity*, const Field&, List<Entity*>* list);
 
 // detect::
-bool detectPhysCirclePhysCircle(const PhysicalCircle* first, const PhysicalCircle* second, float tick);
+bool detectPhysCirclePhysCircle(PhysicalCircle* first, PhysicalCircle* second, float tick);
 
 
 const CollisionDetect COLL_DETECT[AMOUNT_PHYSICAL_COMPONENTS][AMOUNT_PHYSICAL_COMPONENTS] = 

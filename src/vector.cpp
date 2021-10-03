@@ -274,6 +274,13 @@ float deltaZ(const Vector3& vector_a, const Vector3& vector_b)
     return (vector_a.z - vector_b.z);
 }
 
+Vector2 getRandomDirection()
+{
+    Vector2 direction(rand(), rand());
+    direction.Normalize();
+
+    return direction;
+}
 
 // float Vector3::angleXy const
 // {

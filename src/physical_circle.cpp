@@ -3,12 +3,14 @@
 PhysicalCircle::PhysicalCircle()
 {
     type_ = PHYSICAL_CIRCLE;
+    was_collide = false;
 }
 
 PhysicalCircle::PhysicalCircle(float init_radius, float init_mass, Vector2 init_velocity, Vector2 init_coord, REACTION_TYPE react_type) : radius(init_radius), mass(init_mass), velocity(init_velocity) 
 {
     coord = init_coord; 
     type_ = PHYSICAL_CIRCLE;
+    was_collide = false;
     react_type_ = react_type;
 }
  

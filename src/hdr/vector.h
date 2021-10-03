@@ -108,7 +108,7 @@ float deltaX(const Vector2& vector_a, const Vector2& vector_b);
 float deltaY(const Vector2& vector_a, const Vector2& vector_b);
 float deltaZ(const Vector3& vector_a, const Vector3& vector_b);
 
-
+Vector2 getRandomDirection();
 
 
 // float getAngleXY() const;

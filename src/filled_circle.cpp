@@ -1,9 +1,9 @@
 #include "hdr/filled_circle.h"
 
-FilledCircle::FilledCircle(PixelPoint position, Color init_color, float radius) : pixel_radius(radius) 
+FilledCircle::FilledCircle(PixelPoint init_position, Color init_color, float radius) : pixel_radius(radius) 
 {
     color = init_color;
-    position = position;
+    position = init_position;
     type_ = FILLED_CIRCLE;
 };
 
@@ -35,4 +35,10 @@ void FilledCircle::Draw(Display& display)
     }
     
     display.setColor(old_color);
+}
+
+bool FilledCircle::isWithin(const PixelPoint& point)
+{   
+    PixelPoint result = {(point.x - position.x), (point.y - position.y)};
+    return ( result.x * result.x + result.y * result.y <= pixel_radius * pixel_radius);
 }

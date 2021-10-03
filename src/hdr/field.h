@@ -28,6 +28,7 @@ public:
 
     void Move(PixelPoint pixelpoint);
     void Draw(Display& display);
+    Vector2 getRandomCoord() const;
 
     void drawFigure(Display& display, Entity* entity);
 

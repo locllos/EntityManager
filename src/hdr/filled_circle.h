@@ -16,7 +16,9 @@ public:
     FilledCircle(PixelPoint position, Color color, float radius);
     FilledCircle(Color color);
 
-    void Draw(Display& display) override;    
+    void Draw(Display& display) override;   
+    
+    bool isWithin(const PixelPoint& point) override; 
 
     virtual ~FilledCircle() = default;
 };

@@ -8,12 +8,17 @@ struct Color
     Color() = default;
     Color(uint8_t red,  uint8_t green, uint8_t blue, uint8_t alpha);
 
+    void decreaseRGB(uint8_t value);
+    void increaseRGB(uint8_t value);
+
     uint8_t red;
     uint8_t green;
     uint8_t blue;
 
     uint8_t alpha;
 };
+
+Color getRandomColor();
 
 const Color CURRENT_COLOR = {0, 0, 0, 0};
 
@@ -29,6 +34,19 @@ struct PixelPoint
     const PixelPoint& operator=(const PixelPoint& rhs_point);
 
 };
+
+
+struct MouseState
+{
+    PixelPoint position;
+
+    int32_t status;
+
+    bool isClickedLeftButton() const;
+    bool isClickedMiddleButton() const;
+    bool isClickedRightButton() const;
+};  
+
 
 struct Pixel
 {
@@ -55,6 +73,7 @@ SDL_Color convertDefaultColorToSDL(Color color);
 Rectangle convertSDLRectangleToDefault(SDL_Rect sdl_rect);
 SDL_Rect  convertDefaultRectangleToSDL(Rectangle sdl_rect);
 
+void Delay(int time);
 
 class Display
 {
@@ -90,6 +109,8 @@ public:
     void setClipRect(const Rectangle& rect);
 
     bool isWithinWindow(PixelPoint point);
+
+    MouseState getMouseState() const;
 
     ~Display();
 };

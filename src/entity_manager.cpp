@@ -90,7 +90,7 @@ void EntityManager::detectCollisionProcessing(Array<Collision>& collisions, Fiel
 
 void EntityManager::responseCollisionProcessing(Array<Collision>& collisions, Field& field)
 {   
-    entityListDump(entity_list_);
+    // entityListDump(entity_list_);
 
     size_t amount_collisions = collisions.size();
     for (size_t i = 0; i < amount_collisions; ++i)
@@ -109,17 +109,14 @@ void EntityManager::responseCollisionProcessing(Array<Collision>& collisions, Fi
             }
             else
             {
-                            REACT_RESPONCE[first->react_type()][second->react_type()]
-                                                  (collisions[i].first_entity->value, 
-                                                   collisions[i].second_entity->value, field, &entity_list_);
-                // entityListDump(entity_list_);
+                REACT_RESPONCE[first->react_type()][second->react_type()]
+                                        (collisions[i].first_entity->value, 
+                                         collisions[i].second_entity->value, field, &entity_list_);
                 entity_list_.Delete(collisions[i].first_entity);
                 entity_list_.Delete(collisions[i].second_entity);
             }
         }
     }
-    entityListDump(entity_list_);
-
 }
 
 void EntityManager::nextMovementProcessing(float tick)
