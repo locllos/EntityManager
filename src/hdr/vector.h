@@ -54,16 +54,7 @@ public:
 
     void Normalize();
 
-    ~Vector2()
-    {
-        // static long long int destr_calls_num = 0;
-        // ++destr_calls_num;
-
-        // printf("destr vector calls num: %lld\n", destr_calls_num);
-        
-        // x = 0;
-        // y = 0;
-    }
+    ~Vector2() = default;
 
 };
 

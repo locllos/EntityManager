@@ -30,7 +30,7 @@ float PhysicalCircle::getKineticEnergy() const
     return 0.5 * mass * (velocity * velocity);
 }
 
-COLLISION_TYPE PhysicalCircle::collisionWallDetect(const Field& field, float tick)
+COLLISION_TYPE PhysicalCircle::collisionWallDetect(Field& field, float tick)
 {
     if (!field.isWithin(field.coord_system().getAbsolute(this->coord + Vector2(this->radius, 0))))
     {

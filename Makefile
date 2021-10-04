@@ -6,11 +6,11 @@ OBJ_FLAGS = -c -g3
 EXEC_NAME = entity_master
 SUCCESS_MESSAGE = Success!
 
-simple: main
-	printf "Simple make\n"
+simple: 
+	$(EXEC) $(MAIN_DIR)/main.cpp $(OBJ_DIR)/display.o $(OBJ_DIR)/field.o $(OBJ_DIR)/coordinate_system.o $(OBJ_DIR)/vector.o $(OBJ_DIR)/filled_circle.o $(OBJ_DIR)/entity_manager.o $(OBJ_DIR)/entity.o $(OBJ_DIR)/collision_processor.o $(OBJ_DIR)/physical_circle.o $(OBJ_DIR)/component_connector.o $(OBJ_DIR)/filled_square.o $(OBJ_DIR)/command.o $(OBJ_DIR)/button.o $(OBJ_DIR)/button_manager.o $(OBJ_DIR)/dynamic_graphic.o $(MAIN_FLAGS) -o $(EXEC_NAME)
 
-main: $(OBJ_DIR)/display.o $(OBJ_DIR)/field.o $(OBJ_DIR)/coordinate_system.o $(OBJ_DIR)/vector.o $(OBJ_DIR)/filled_circle.o $(OBJ_DIR)/entity_manager.o $(OBJ_DIR)/entity.o $(OBJ_DIR)/collision_processor.o $(OBJ_DIR)/physical_circle.o $(OBJ_DIR)/component_connector.o $(OBJ_DIR)/filled_square.o $(OBJ_DIR)/command.o $(OBJ_DIR)/button.o $(OBJ_DIR)/button_manager.o
-	$(EXEC) $(MAIN_DIR)/main.cpp $(OBJ_DIR)/display.o $(OBJ_DIR)/field.o $(OBJ_DIR)/coordinate_system.o $(OBJ_DIR)/vector.o $(OBJ_DIR)/filled_circle.o $(OBJ_DIR)/entity_manager.o $(OBJ_DIR)/entity.o $(OBJ_DIR)/collision_processor.o $(OBJ_DIR)/physical_circle.o $(OBJ_DIR)/component_connector.o $(OBJ_DIR)/filled_square.o $(OBJ_DIR)/command.o $(OBJ_DIR)/button.o $(OBJ_DIR)/button_manager.o $(MAIN_FLAGS) -o $(EXEC_NAME)
+main: $(OBJ_DIR)/display.o $(OBJ_DIR)/field.o $(OBJ_DIR)/coordinate_system.o $(OBJ_DIR)/vector.o $(OBJ_DIR)/filled_circle.o $(OBJ_DIR)/entity_manager.o $(OBJ_DIR)/entity.o $(OBJ_DIR)/collision_processor.o $(OBJ_DIR)/physical_circle.o $(OBJ_DIR)/component_connector.o $(OBJ_DIR)/filled_square.o $(OBJ_DIR)/command.o $(OBJ_DIR)/button.o $(OBJ_DIR)/button_manager.o $(OBJ_DIR)/dynamic_graphic.o
+	$(EXEC) $(MAIN_DIR)/main.cpp $(OBJ_DIR)/display.o $(OBJ_DIR)/field.o $(OBJ_DIR)/coordinate_system.o $(OBJ_DIR)/vector.o $(OBJ_DIR)/filled_circle.o $(OBJ_DIR)/entity_manager.o $(OBJ_DIR)/entity.o $(OBJ_DIR)/collision_processor.o $(OBJ_DIR)/physical_circle.o $(OBJ_DIR)/component_connector.o $(OBJ_DIR)/filled_square.o $(OBJ_DIR)/command.o $(OBJ_DIR)/button.o $(OBJ_DIR)/button_manager.o $(OBJ_DIR)/dynamic_graphic.o $(MAIN_FLAGS) -o $(EXEC_NAME)
 
 $(OBJ_DIR)/display.o:
 	$(EXEC) $(OBJ_FLAGS) $(MAIN_DIR)/display.cpp -o $(OBJ_DIR)/display.o
@@ -54,10 +54,13 @@ $(OBJ_DIR)/button.o:
 $(OBJ_DIR)/button_manager.o:
 	$(EXEC) $(OBJ_FLAGS) $(MAIN_DIR)/button_manager.cpp -o $(OBJ_DIR)/button_manager.o
 
+$(OBJ_DIR)/dynamic_graphic.o:
+	$(EXEC) $(OBJ_FLAGS) $(MAIN_DIR)/dynamic_graphic.cpp -o $(OBJ_DIR)/dynamic_graphic.o
+
 # $(OBJ_DIR)/list.o:
 # 	$(EXEC) $(OBJ_FLAGS) $(MAIN_DIR)/hdr/list.hpp -o $(OBJ_DIR)/list.o
 
-all: main clear
+all: clear main 
 	echo -e "\033[0;32m$(SUCCESS_MESSAGE)\033[0m"
 
 clear:

@@ -1,19 +1,29 @@
 #include "hdr/button.h"
 
-IlluminatedButton::IlluminatedButton(Command* command, GraphicalComponent* init_graph) : illuminated_factor_(50), smooth_fading_factor_(-1), decrease_factor_(0), color_changed(false) {command_ = command; graph = init_graph;};
+IlluminatedButton::IlluminatedButton(Command* command, GraphicalComponent* init_graph) : illuminated_factor_(50), smooth_fading_factor_(-1), decrease_factor_(0), color_changed(false) 
+{
+    command_ = command; 
+    graph = init_graph; 
+
+    new_color_ = graph->color;
+
+    new_color_.red += (graph->color.red) == 0 ? 0 : illuminated_factor_;
+    new_color_.green += (graph->color.green) == 0 ? 0 : illuminated_factor_;
+    new_color_.blue += (graph->color.blue) == 0 ? 0 : illuminated_factor_;
+
+};
 
 void IlluminatedButton::Action(const MouseState& status)
 {   
     if (graph->isWithin(status.position) && status.isClickedLeftButton())
-    {
+    {   
         actionClick();
         Delay(100);
     }
-    else if (graph->isWithin(status.position) && !color_changed)
+    else if (graph->isWithin(status.position))
     {
-        graph->color.red += (graph->color.red) == 0 ? 0 : illuminated_factor_;
-        graph->color.green += (graph->color.green) == 0 ? 0 : illuminated_factor_;
-        graph->color.blue += (graph->color.blue) == 0 ? 0 : illuminated_factor_;
+        graph->color = new_color_;
+
         color_changed = true;
         printf("change color\n");
         decrease_factor_ = 10;

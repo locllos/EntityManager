@@ -17,13 +17,14 @@ protected:
 
 public:
 
+    Field() = default;
     // Первоначальные координаты отсчитываются от верхнего левого угла Feild
     Field(Rectangle area, Color color,
           Vector2 origin_point, float scale);
-    // Field(Rectangle area, Color color,
-    //       PixelPoint abs_origin_point, float scale);
+    Field(Rectangle area, Color color,
+          PixelPoint abs_origin_point, float scale);
 
-    const CoordinateSystem& coord_system() const;
+    CoordinateSystem& coord_system();
     const Rectangle& area() const;
 
     void Move(PixelPoint pixelpoint);
@@ -31,6 +32,9 @@ public:
     Vector2 getRandomCoord() const;
 
     void drawFigure(Display& display, Entity* entity);
+
+    void drawPoint(Display& display, Vector2& point, Color& color);
+    void drawLine(Display& display, Vector2& first_point, Vector2& second_point, Color& color);
 
     bool isWithin(PixelPoint point) const;
 

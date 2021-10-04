@@ -24,10 +24,10 @@ const Color CURRENT_COLOR = {0, 0, 0, 0};
 
 struct PixelPoint
 {
-    size_t x;
-    size_t y;
+    int x;
+    int y;
 
-    PixelPoint Add(size_t x, size_t y);
+    PixelPoint Add(int x, int y);
 
     PixelPoint operator+(PixelPoint rhs_point);
     PixelPoint operator-(PixelPoint rhs_point);
@@ -56,8 +56,8 @@ struct Pixel
 
 struct Rectangle
 {
-    size_t x;
-    size_t y;
+    int x;
+    int y;
 
     int width;
     int height;
@@ -106,7 +106,8 @@ public:
     void drawPoint(PixelPoint point, Color = CURRENT_COLOR);
     
     void fillRect(const Rectangle& rect, Color color = CURRENT_COLOR);
-    void setClipRect(const Rectangle& rect);
+    void clipRect(const Rectangle& rect);
+    void unClipRect();
 
     bool isWithinWindow(PixelPoint point);
 

@@ -17,6 +17,8 @@ private:
     Node<elem_t>* head_;
     Node<elem_t>* tail_;
 
+    int size_;
+
 public:
 
     List()
@@ -37,6 +39,7 @@ public:
 
     void Append(Node<elem_t>* new_node)
     {   
+        ++size_;
         if (head_ == nullptr)
         {
             head_ = new_node;
@@ -48,6 +51,7 @@ public:
         new_node->prev = tail_;
 
         tail_ = new_node;
+
     }
 
     void Append(elem_t elem)
@@ -57,7 +61,8 @@ public:
 
 
     void Delete(Node<elem_t>* node)
-    {
+    {   
+        --size_;
         if (node == nullptr) return;
 
         if (node == tail_ && node == head_)
@@ -85,6 +90,11 @@ public:
         }
 
         delete node;
+    }
+
+    int size() const
+    {
+        return size_;
     }
 
     ~List()

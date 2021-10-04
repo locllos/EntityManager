@@ -62,7 +62,7 @@ bool MouseState::isClickedRightButton() const
 
 Rectangle convertSDLRectangleToDefault(SDL_Rect sdl_rect)
 {
-    return {(size_t)sdl_rect.x, (size_t)sdl_rect.y, sdl_rect.w, sdl_rect.h};
+    return {sdl_rect.x, sdl_rect.y, sdl_rect.w, sdl_rect.h};
 }
 
 SDL_Rect convertDefaultRectangleToSDL(Rectangle rectangle)
@@ -70,7 +70,7 @@ SDL_Rect convertDefaultRectangleToSDL(Rectangle rectangle)
     return (SDL_Rect){rectangle.x, rectangle.y, rectangle.width, rectangle.height};
 }
 
-PixelPoint PixelPoint::Add(size_t x, size_t y)
+PixelPoint PixelPoint::Add(int x, int y)
 {       
     return this->operator+({x, y});
 }
@@ -246,10 +246,15 @@ void Display::fillRect(const Rectangle& rectangle, Color color)
     if (!is_current_color) setColor(old_color);
 }
 
-void Display::setClipRect(const Rectangle& rect)
+void Display::clipRect(const Rectangle& rect)
 {   
     SDL_Rect sdl_rect = convertDefaultRectangleToSDL(rect);
     SDL_RenderSetClipRect(renderer_, &sdl_rect);
+}
+
+void Display::unClipRect()
+{   
+    SDL_RenderSetClipRect(renderer_, nullptr);
 }
 
 MouseState Display::getMouseState() const

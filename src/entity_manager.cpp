@@ -2,7 +2,7 @@
 #include "hdr/array.hpp"
 
 
-EntityManager::EntityManager() : size_(0), entity_list_() {}
+EntityManager::EntityManager() : size_(0), entity_list_(), amount_circles_(0) {}
 
 void EntityManager::addEntity(Entity* entity)
 {
@@ -16,7 +16,8 @@ bool isEnoughKineticEnergy(const PhysicalComponent* first, const PhysicalCompone
 }
 
 void EntityManager::addFilledCirclePhysCircle(Field& field, Color color, float radius, float mass, Vector2 coord, Vector2 velocity, REACTION_TYPE react_type)
-{
+{   
+    ++amount_circles_;
     entity_list_.Append(new Entity(new FilledCircle(color), 
                                    new PhysicalCircle(radius, mass, velocity, coord, react_type), field));
 }
@@ -111,7 +112,7 @@ void EntityManager::responseCollisionProcessing(Array<Collision>& collisions, Fi
             {
                 REACT_RESPONCE[first->react_type()][second->react_type()]
                                         (collisions[i].first_entity->value, 
-                                         collisions[i].second_entity->value, field, &entity_list_);
+                                         collisions[i].second_entity->value, field, &entity_list_, amount_circles_);
                 entity_list_.Delete(collisions[i].first_entity);
                 entity_list_.Delete(collisions[i].second_entity);
             }
@@ -138,3 +139,12 @@ void EntityManager::processEntities(Display& display, Field& field, float tick)
     nextMovementProcessing(tick);
 }
 
+int EntityManager::getAmountCircles() const
+{
+    return amount_circles_;
+}
+
+int EntityManager::getAmountSquares() const
+{
+    return entity_list_.size() - amount_circles_;
+}

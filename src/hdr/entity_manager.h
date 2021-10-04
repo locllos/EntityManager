@@ -12,6 +12,7 @@ private:
     List<Entity*> entity_list_;
 
     size_t size_;
+    int amount_circles_;
 
     void drawProcessing(Display& display, Field& field);
     void detectCollisionProcessing(Array<Collision>& collisions, Field& field, float tick);
@@ -27,6 +28,9 @@ public:
     void addFilledCirclePhysCircle(Field& field, Color color, float radius, float mass, Vector2 coord, Vector2 velocity, REACTION_TYPE react_type = NO_REACTION);
     void addFilledSquarePhysCircle(Field& field, Color color, float length, float mass, Vector2 coord, Vector2 velocity, REACTION_TYPE react_type = NO_REACTION);
     void processEntities(Display& display, Field& field, float tick);
+
+    int getAmountCircles() const;
+    int getAmountSquares() const;
 
     ~EntityManager() = default;
 };

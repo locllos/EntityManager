@@ -2,7 +2,7 @@
 #include "hdr/component_connector.h"
 
 
-void Entity::connectComponents(const Field& field)
+void Entity::connectComponents(Field& field)
 {
     COMPONENT_CONNECTORS[phys_->type()]
                         [graph_->type()](phys_, graph_, field);
@@ -18,7 +18,7 @@ PhysicalComponent* Entity::phys()
     return phys_;
 }
 
-Entity::Entity(GraphicalComponent* graph_comp, PhysicalComponent* phys_comp, const Field& field)
+Entity::Entity(GraphicalComponent* graph_comp, PhysicalComponent* phys_comp, Field& field)
 {
     graph_ = graph_comp;
     phys_  = phys_comp;

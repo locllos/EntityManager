@@ -26,6 +26,7 @@ class IlluminatedButton : public Button
 {
 private:
 
+    Color new_color_;
     bool color_changed;
     size_t illuminated_factor_;
     int decrease_factor_;

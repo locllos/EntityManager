@@ -73,7 +73,7 @@ void collisionPhysCirclePhysCircle(PhysicalCircle* first, PhysicalCircle* second
 
 // reaction::
 
-void reactionCircleCircle(Entity* first, Entity* second, const Field& field, List<Entity*>* list)
+void reactionCircleCircle(Entity* first, Entity* second, Field& field, List<Entity*>* list, int& amount_circles)
 {
     // List<Entity*>* entity_list = new List<Entity*>();
 
@@ -97,11 +97,13 @@ void reactionCircleCircle(Entity* first, Entity* second, const Field& field, Lis
 
     list->Append(new Entity((GraphicalComponent*)(new FilledSquare(result_color)), 
                             (PhysicalComponent*) (new PhysicalCircle(result_radius, result_mass, result_velocity, result_coord, REACTION_SQUARE)), field));
+    
+    amount_circles -= 2;
     // return entity_list;
 }
 
 
-void reactionCircleSquare(Entity* first, Entity* second, const Field& field, List<Entity*>* list)
+void reactionCircleSquare(Entity* first, Entity* second, Field& field, List<Entity*>* list, int& amount_circles)
 {
     // List<Entity*>* entity_list = new List<Entity*>();
 
@@ -123,15 +125,16 @@ void reactionCircleSquare(Entity* first, Entity* second, const Field& field, Lis
 
     list->Append(new Entity((GraphicalComponent*)(new FilledSquare(result_color)), 
                             (PhysicalComponent*) (new PhysicalCircle(result_radius, result_mass, result_velocity, result_coord, REACTION_SQUARE)), field));
+    --amount_circles;
     // return entity_list;
 }
 
-void reactionSquareCircle(Entity* first, Entity* second, const Field& field, List<Entity*>* list)
+void reactionSquareCircle(Entity* first, Entity* second, Field& field, List<Entity*>* list, int& amount_circles)
 {
-    /*return*/ reactionCircleSquare(second, first, field, list);
+    /*return*/ reactionCircleSquare(second, first, field, list, amount_circles);
 }
 
-void reactionSquareSquare(Entity* first, Entity* second, const Field& field, List<Entity*>* list)
+void reactionSquareSquare(Entity* first, Entity* second, Field& field, List<Entity*>* list, int& amount_circles)
 {
     // List<Entity*>* entity_list = new List<Entity*>();
 
@@ -145,26 +148,26 @@ void reactionSquareSquare(Entity* first, Entity* second, const Field& field, Lis
     float result_radius = 1;
     float rotatable_angle = 2 * PI / amount_balls;
     float velocity_coeff = ((first_phys->velocity   * first_phys->mass - 
-                              second_phys->velocity * second_phys->mass) * (1 / (float)amount_balls)).getLength();
+                             second_phys->velocity * second_phys->mass) * (1 / (float)amount_balls)).getLength();
 
 
     Color result_color = getMixedColor(first->graph()->color, first_phys->mass / result_mass,
                                        second->graph()->color, second_phys->mass / result_mass);
     
-    float current_angle = direction.getAngle();
+    printf("rot angle pi / %d\n", amount_balls);
     for (size_t i = 0; i < amount_balls; ++i)
     {   
         PhysicalComponent* new_phys_comp = new PhysicalCircle(result_radius, 
                                                               1, 
-                                                              direction * velocity_coeff, 
-                                                              result_coord + direction * 2, 
+                                                              direction * velocity_coeff * 2, 
+                                                              result_coord + direction * (amount_balls), 
                                                               REACTION_CIRCLE);
         GraphicalComponent* new_graph_comp = new FilledCircle(result_color);
         list->Append(new Entity(new_graph_comp, new_phys_comp, field));
         
-        direction.Rotate(current_angle);
-        current_angle += rotatable_angle;
+        direction.Rotate(rotatable_angle);
     }
+    amount_circles += amount_balls;
     // return entity_list;
 }
 

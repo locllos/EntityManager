@@ -24,8 +24,8 @@ public:
 
     float getKineticEnergy() const override;
 
-    COLLISION_TYPE collisionWallDetect(const Field& field, float tick) override;
-    void collisionWallResponse(const Field& field, COLLISION_TYPE collision_type) override;
+    COLLISION_TYPE collisionWallDetect(Field& field, float tick) override;
+    void collisionWallResponse(const Field&  field, COLLISION_TYPE collision_type) override;
 
     virtual ~PhysicalCircle() = default;
 };

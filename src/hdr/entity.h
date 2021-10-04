@@ -90,7 +90,7 @@ public:
     PhysicalComponent() = default;    
 
     virtual void nextMovement(float tick) = 0;
-    virtual COLLISION_TYPE collisionWallDetect(const Field& field, float tick) = 0;
+    virtual COLLISION_TYPE collisionWallDetect(Field& field, float tick) = 0;
     virtual void collisionWallResponse(const Field& field, COLLISION_TYPE collision_type) = 0;
     virtual Vector2 getNextMovement(float tick) const = 0;
     virtual float getKineticEnergy() const = 0;
@@ -108,13 +108,13 @@ private:
     GraphicalComponent* graph_;
     PhysicalComponent*  phys_;
 
-    void connectComponents(const Field& field);
+    void connectComponents(Field& field);
 
 public:
 
     Entity() = delete;
     
-    Entity(GraphicalComponent* graph_comp, PhysicalComponent* phys_comp, const Field& field);
+    Entity(GraphicalComponent* graph_comp, PhysicalComponent* phys_comp, Field& field);
     Entity(const Entity& other);
     Entity(const Entity* other);
 

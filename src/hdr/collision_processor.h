@@ -17,9 +17,9 @@ struct Collision
 
 const float KINETIC_ENERGY_THRESHOLD = 1;
 
-typedef bool           (*CollisionDetect)  (PhysicalComponent*, PhysicalComponent*, float tick);
-typedef void           (*CollisionResponce)(PhysicalComponent*, PhysicalComponent*);
-typedef void (*ReactionResponce) (Entity*, Entity*, const Field&, List<Entity*>* list);
+typedef bool (*CollisionDetect)  (PhysicalComponent*, PhysicalComponent*, float tick);
+typedef void (*CollisionResponce)(PhysicalComponent*, PhysicalComponent*);
+typedef void (*ReactionResponce) (Entity*, Entity*, Field&, List<Entity*>* list, int& amount_circles);
 
 // detect::
 bool detectPhysCirclePhysCircle(PhysicalCircle* first, PhysicalCircle* second, float tick);
@@ -39,10 +39,10 @@ const CollisionResponce COLL_RESPONSE[AMOUNT_PHYSICAL_COMPONENTS][AMOUNT_PHYSICA
 };
 
 // reaction::
-void reactionCircleCircle(Entity* first, Entity* second, const Field& field, List<Entity*>* list);
-void reactionCircleSquare(Entity* first, Entity* second, const Field& field, List<Entity*>* list);
-void reactionSquareCircle(Entity* first, Entity* second, const Field& field, List<Entity*>* list);
-void reactionSquareSquare(Entity* first, Entity* second, const Field& field, List<Entity*>* list);
+void reactionCircleCircle(Entity* first, Entity* second, Field& field, List<Entity*>* list, int& amount_circles);
+void reactionCircleSquare(Entity* first, Entity* second, Field& field, List<Entity*>* list, int& amount_circles);
+void reactionSquareCircle(Entity* first, Entity* second, Field& field, List<Entity*>* list, int& amount_circles);
+void reactionSquareSquare(Entity* first, Entity* second, Field& field, List<Entity*>* list, int& amount_circles);
 
 const ReactionResponce REACT_RESPONCE[AMOUNT_REACTION_TYPES][AMOUNT_REACTION_TYPES] = 
 {
